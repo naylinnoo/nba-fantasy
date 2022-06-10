@@ -1,18 +1,18 @@
 import "../styles/globals.scss"
 import type { AppProps } from "next/app"
 import Navbar from "components/nav"
-import { Provider } from "react-redux"
-import store from "ducks/Store"
-import { persistStore } from "redux-persist"
+import { Provider, useDispatch, useSelector } from "react-redux"
+import { persistor, RootState, store } from "ducks/Store"
+import { PersistGate } from "redux-persist/integration/react"
 
 function MyApp({ Component, pageProps }: AppProps) {
-    let persistor = persistStore(store)
-
     return (
         <>
             <Provider store={store}>
-                <Navbar />
-                <Component {...pageProps} />
+                <PersistGate loading={null} persistor={persistor}>
+                    <Navbar />
+                    <Component {...pageProps} />
+                </PersistGate>
             </Provider>
         </>
     )

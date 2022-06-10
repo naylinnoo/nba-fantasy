@@ -32,11 +32,9 @@ const LoginForm = () => {
                 <Formik
                     initialValues={{ username: "", password: "" }}
                     onSubmit={(values, { setSubmitting }) => {
-                        setTimeout(() => {
-                            alert(JSON.stringify(values, null, 2))
-                            dispatch(login(values.username, true))
-                            setSubmitting(false)
-                        }, 400)
+                        alert("Successfully logged in")
+                        dispatch(login(values.username, true))
+                        setSubmitting(false)
                     }}
                     validationSchema={LoginSchema}
                 >
