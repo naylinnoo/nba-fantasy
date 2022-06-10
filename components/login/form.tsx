@@ -1,8 +1,12 @@
+import { login } from "ducks/modules/Auth"
 import { ErrorMessage, Formik, FormikErrors } from "formik"
 import { Button, Container, Form } from "react-bootstrap"
+import { useDispatch } from "react-redux"
+import { AnyAction } from "redux"
 import * as Yup from "yup"
 
 const LoginForm = () => {
+    const dispatch = useDispatch()
     type FormDefaultValues = {
         username: string
         password: string
@@ -30,6 +34,7 @@ const LoginForm = () => {
                     onSubmit={(values, { setSubmitting }) => {
                         setTimeout(() => {
                             alert(JSON.stringify(values, null, 2))
+                            dispatch(login(values.username, true))
                             setSubmitting(false)
                         }, 400)
                     }}

@@ -19,7 +19,8 @@
             "@app/*": ["./src/*"],
             "@components/*": ["./src/components/*"],
             "@hooks/*": ["./src/hooks/*"],
-            "@styles/*": ["./src/styles/*"]
+            "@styles/*": ["./src/styles/*"],
+            "@modules/*": ["./src/ducks/mudles/*"]
         }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
