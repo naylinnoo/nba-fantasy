@@ -21,7 +21,7 @@ const TeamCreate = () => {
             >
                 <Modal.Header closeButton></Modal.Header>
                 <Modal.Body>
-                    <TeamForm />
+                    <TeamForm setModalShow={setModalShow} />
                 </Modal.Body>
             </Modal>
         </div>

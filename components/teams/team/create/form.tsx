@@ -6,17 +6,30 @@ import PlayerSelect from "./PlayerSelect"
 
 import * as Yup from "yup"
 import { useEffect, useState } from "react"
-import { addTeam } from "ducks/modules/Teams"
+import { addTeam, updatePlayerInTeams } from "ducks/modules/Teams"
 
-const TeamForm = () => {
+const TeamForm = ({ setModalShow }: any) => {
     const dispatch = useDispatch()
+
+    type Players = {
+        value: number
+        label: string
+    }
 
     type FormDefaultValues = {
         name: string
         player_count: number
         region: string
         country: string
-        players: []
+        players: Players[]
+    }
+
+    const addPlayerToTeams = (players: Players[]) => {
+        var playersIds: number[] = []
+        players.map((value) => {
+            playersIds.push(value.value)
+        })
+        dispatch(updatePlayerInTeams(playersIds))
     }
 
     const LoginSchema = Yup.object().shape({
@@ -67,8 +80,10 @@ const TeamForm = () => {
                     }}
                     onSubmit={(values, { setSubmitting }) => {
                         dispatch(addTeam(values))
+                        addPlayerToTeams(values.players)
                         alert("Team created successfully")
                         setSubmitting(false)
+                        setModalShow(false)
                     }}
                     validationSchema={LoginSchema}
                 >

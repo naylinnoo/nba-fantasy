@@ -1,6 +1,4 @@
-import { PayloadAction } from "@reduxjs/toolkit"
-import { AnyAction, Dispatch } from "redux"
-import { string } from "yup"
+import { Dispatch } from "redux"
 
 type TeamModel = {
     name: string
@@ -16,24 +14,29 @@ type PlayerModel = {
 
 type TeamState = {
     teams: TeamModel[]
+    playersInTeams: number[]
 }
 
 const initialState: TeamState = {
     teams: [],
+    playersInTeams: [],
 }
 
 export const ADD_TEAM = "add_team"
+export const UPDATE_PLAYER_IN_TEAMS = "update_player_in_teams"
 
-const TeamsReducer = (
-    state = initialState,
-    action: PayloadAction<TeamModel>
-) => {
+const TeamsReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case "ADD_TEAM":
-            const { name, region, country, players } = action.payload
             return {
                 ...state,
-                teams: [...state.teams, { name, region, country, players }],
+                teams: [...state.teams, action.payload],
+            }
+        case "UPDATE_PLAYER_IN_TEAMS":
+            console.log(action.payload)
+            return {
+                ...state,
+                playersInTeams: [...state.playersInTeams, ...action.payload],
             }
         default:
             return state
@@ -45,6 +48,15 @@ export const addTeam = (team: TeamModel) => {
         dispatch({
             type: "ADD_TEAM",
             payload: team,
+        })
+    }
+}
+
+export const updatePlayerInTeams = (players: number[]) => {
+    return async (dispatch: Dispatch) => {
+        dispatch({
+            type: "UPDATE_PLAYER_IN_TEAMS",
+            payload: players,
         })
     }
 }
