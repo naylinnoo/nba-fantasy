@@ -1,11 +1,13 @@
+import { removeTeam } from "ducks/modules/Teams"
 import { RootState } from "ducks/Store"
 import { useEffect, useState } from "react"
 import { Button, Card, Col, Container, Row } from "react-bootstrap"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import TeamCreate from "./team/create"
 import TeamEdit from "./team/edit"
 
 const Teams = () => {
+    const dispatch = useDispatch()
     const { teams } = useSelector((state: any) => state.teams)
     const [modalShow, setModalShow] = useState(false)
     const [currentTeam, setCurrentTeam] = useState(
@@ -67,13 +69,21 @@ const Teams = () => {
                                             <br />
                                             <Button
                                                 variant="primary"
-                                                size={"lg"}
                                                 onClick={() => {
                                                     setCurrentTeam(value)
                                                     setModalShow(true)
                                                 }}
                                             >
                                                 Edit
+                                            </Button>
+                                            <Button
+                                                variant="danger"
+                                                onClick={() => {
+                                                    dispatch(removeTeam(value))
+                                                    alert("deleted")
+                                                }}
+                                            >
+                                                DELETE
                                             </Button>
                                         </Card.Body>
                                     </Card>

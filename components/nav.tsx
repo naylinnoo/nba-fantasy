@@ -1,4 +1,5 @@
 import { logout } from "ducks/modules/Auth"
+import { removeAllTeam } from "ducks/modules/Teams"
 import { RootState } from "ducks/Store"
 import { Nav } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
@@ -10,6 +11,7 @@ const Navbar = () => {
 
     const handleLogout = () => {
         dispatch(logout())
+        dispatch(removeAllTeam())
     }
 
     return (

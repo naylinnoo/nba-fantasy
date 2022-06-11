@@ -10,7 +10,6 @@ const TeamEdit = ({ name, modalShow, setModalShow }: any) => {
     const { teams } = useSelector((state: any) => state.teams)
 
     const team = teams.filter((value: any) => value.name === name)
-    console.log(team)
 
     return (
         <Modal

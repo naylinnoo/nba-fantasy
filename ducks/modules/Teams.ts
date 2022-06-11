@@ -15,19 +15,16 @@ type PlayerModel = {
 
 type TeamState = {
     teams: TeamModel[]
-    playersInTeams: number[]
 }
 
 const initialState: TeamState = {
     teams: [],
-    playersInTeams: [],
 }
 
 export const ADD_TEAM = "add_team"
 export const UPDATE_TEAM = "update_team"
-export const UPDATE_PLAYER_IN_TEAMS = "update_player_in_teams"
-export const ADD_PLAYER_IN_TEAMS = "add_player_in_teams"
-export const REMOVE_PLAYER_IN_TEAMS = "remove_player_in_teams"
+export const REMOVE_TEAM = "remove_team"
+export const REMOVE_ALL = "remove_all"
 
 const TeamsReducer = (state = initialState, action: any) => {
     switch (action.type) {
@@ -48,11 +45,7 @@ const TeamsReducer = (state = initialState, action: any) => {
             }
         case "UPDATE_TEAM":
             var { name, country, region, players } = action.payload
-            const teams = state.teams.filter(
-                (value: any) => value.name !== name
-            )
-
-            console.log("teams", teams, name)
+            var teams = state.teams.filter((value: any) => value.name !== name)
 
             return {
                 ...state,
@@ -67,7 +60,19 @@ const TeamsReducer = (state = initialState, action: any) => {
                     ...teams,
                 ],
             }
+        case "REMOVE_TEAM":
+            var { name, country, region, players } = action.payload
+            var teams = state.teams.filter((value: any) => value.name !== name)
 
+            return {
+                ...state,
+                teams: [...teams],
+            }
+        case "REMOVE_ALL":
+            return {
+                ...state,
+                teams: [],
+            }
         default:
             return state
     }
@@ -90,4 +95,19 @@ export const updateTeam = (team: TeamModel) => {
     }
 }
 
+export const removeTeam = (team: TeamModel) => {
+    return async (dispatch: Dispatch) => {
+        dispatch({
+            type: "REMOVE_TEAM",
+            payload: team,
+        })
+    }
+}
+export const removeAllTeam = () => {
+    return async (dispatch: Dispatch) => {
+        dispatch({
+            type: "REMOVE_ALL",
+        })
+    }
+}
 export default TeamsReducer
