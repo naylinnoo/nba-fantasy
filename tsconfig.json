@@ -23,6 +23,16 @@
             "@modules/*": ["./src/ducks/mudles/*"]
         }
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+    "include": [
+        "next-env.d.ts",
+        "**/*.ts",
+        "**/*.tsx",
+        "components/teams/team/create/form.js",
+        "components/teams/team/create/MenuList.js",
+        "components/teams/team/create/VirtualizedList.js",
+        "components/teams/team/create/form.js",
+        "components/teams/team/create/MenuList.js",
+        "components/teams/team/create/VirtualizedList.js"
+    ],
     "exclude": ["node_modules"]
 }
