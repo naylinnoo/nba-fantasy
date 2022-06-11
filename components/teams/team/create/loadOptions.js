@@ -10,7 +10,6 @@ const loadOptions = async (search, page) => {
     const options = []
     const { playersInTeams } = store.getState().teams
 
-    console.log(data.meta)
     data?.data.map((value) => {
         if (!playersInTeams.includes(value.id)) {
             options.push({

@@ -1,48 +1,59 @@
 import { login } from "ducks/modules/Auth"
 import { ErrorMessage, Formik, FormikErrors } from "formik"
 import { Button, Container, Form } from "react-bootstrap"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import PlayerSelect from "./PlayerSelect"
 
 import * as Yup from "yup"
 import { useEffect, useState } from "react"
 import { addTeam, updatePlayerInTeams } from "ducks/modules/Teams"
+import { RootState } from "ducks/Store"
 
-const TeamForm = ({ setModalShow }: any) => {
+const TeamForm = ({ setModalShow }) => {
     const dispatch = useDispatch()
 
-    type Players = {
-        value: number
-        label: string
-    }
+    // type Players = {
+    //     value: number
+    //     label: string
+    // }
 
-    type FormDefaultValues = {
-        name: string
-        player_count: number
-        region: string
-        country: string
-        players: Players[]
-    }
+    // type FormDefaultValues = {
+    //     name: string
+    //     player_count: number
+    //     region: string
+    //     country: string
+    //     players: Players[]
+    // }
 
-    const addPlayerToTeams = (players: Players[]) => {
-        var playersIds: number[] = []
+    const addPlayerToTeams = (players) => {
+        var playersIds = []
         players.map((value) => {
             playersIds.push(value.value)
         })
         dispatch(updatePlayerInTeams(playersIds))
     }
 
+    const teams = useSelector((state) => state.teams.teams)
+
+    Yup.addMethod(Yup.string, "nameUnique", function (errorMessage) {
+        return this.test(`test-name-unique`, errorMessage, function (value) {
+            const { path, createError } = this
+
+            return (
+                !teams.find((data) => data.name === value) ||
+                createError({ path, message: errorMessage })
+            )
+        })
+    })
+
     const LoginSchema = Yup.object().shape({
         name: Yup.string()
             .matches(
                 /^[a-zA-Z0-9z\s]+$/,
-                "Username must not contain whitespace or special characters"
+                "Name must not contain whitespace or special characters"
             )
-            .required("Required")
-            .matches(
-                /^[a-zA-Z0-9\s]+$/,
-                "Username must not contain whitespace or special characters"
-            ),
+            .nameUnique("Name must be unique")
+            .required("Required"),
         region: Yup.string()
             .required("Required")
             .matches(
