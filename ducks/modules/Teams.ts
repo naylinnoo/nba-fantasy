@@ -4,6 +4,7 @@ type TeamModel = {
     name: string
     region: string
     country: string
+    playerCount: number
     players: PlayerModel[]
 }
 
@@ -28,9 +29,19 @@ export const UPDATE_PLAYER_IN_TEAMS = "update_player_in_teams"
 const TeamsReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case "ADD_TEAM":
+            const { name, country, region, players } = action.payload
             return {
                 ...state,
-                teams: [...state.teams, action.payload],
+                teams: [
+                    ...state.teams,
+                    {
+                        name,
+                        country,
+                        region,
+                        players,
+                        player_count: players.length,
+                    },
+                ],
             }
         case "UPDATE_PLAYER_IN_TEAMS":
             console.log(action.payload)

@@ -12,19 +12,6 @@ import { RootState } from "ducks/Store"
 const TeamForm = ({ setModalShow }) => {
     const dispatch = useDispatch()
 
-    // type Players = {
-    //     value: number
-    //     label: string
-    // }
-
-    // type FormDefaultValues = {
-    //     name: string
-    //     player_count: number
-    //     region: string
-    //     country: string
-    //     players: Players[]
-    // }
-
     const addPlayerToTeams = (players) => {
         var playersIds = []
         players.map((value) => {
@@ -165,7 +152,10 @@ const TeamForm = ({ setModalShow }) => {
                                 className="mb-3"
                                 controlId="formBasicPlayers"
                             >
-                                <Form.Label>Players</Form.Label>
+                                <Form.Label>
+                                    Players(Total - {values.players.length})
+                                </Form.Label>
+                                <h6></h6>
                                 <PlayerSelect
                                     value={values.players}
                                     setValue={setFieldValue}
