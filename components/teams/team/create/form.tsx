@@ -38,8 +38,15 @@ const TeamForm = () => {
         country: Yup.string()
             .required("Required")
             .matches(
-                /^[a-zA-Z0-9]+$/,
+                /^[a-zA-Z0-9()]+$/,
                 "Username must not contain whitespace or special characters"
+            ),
+        players: Yup.array()
+            .required("Required")
+            .min(5, "There must be at least five players on the team")
+            .max(
+                15,
+                "A basketball team can only be the size of 15 according to the NBA"
             ),
     })
 
@@ -104,7 +111,7 @@ const TeamForm = () => {
                                     onChange={handleChange}
                                 />
                                 <ErrorMessage
-                                    name="name"
+                                    name="region"
                                     className="text-danger pt-3"
                                     component="div"
                                 />
@@ -122,7 +129,7 @@ const TeamForm = () => {
                                     onChange={handleChange}
                                 />
                                 <ErrorMessage
-                                    name="name"
+                                    name="country"
                                     className="text-danger pt-3"
                                     component="div"
                                 />
@@ -136,6 +143,11 @@ const TeamForm = () => {
                                 <PlayerSelect
                                     value={values.players}
                                     setValue={setFieldValue}
+                                />
+                                <ErrorMessage
+                                    name="players"
+                                    className="text-danger pt-3"
+                                    component="div"
                                 />
                             </Form.Group>
 

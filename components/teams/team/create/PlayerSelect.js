@@ -3,7 +3,6 @@ import loadOptions from "./loadOptions"
 
 const PlayerSelect = ({ value, setValue }) => {
     const handleChange = (value) => {
-        // this is going to call setFieldValue and manually update values.topcis
         setValue("players", value)
     }
 
