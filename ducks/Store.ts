@@ -4,6 +4,7 @@ import { configureStore } from "@reduxjs/toolkit"
 import { default as thunk } from "redux-thunk"
 import { persistReducer, persistStore } from "redux-persist"
 import auth from "./modules/Auth"
+import teams from "./modules/Teams"
 
 const persistConfig = {
     key: "root",
@@ -12,6 +13,7 @@ const persistConfig = {
 
 const reducers = combineReducers({
     auth,
+    teams,
 })
 
 const persistedReducer = persistReducer(persistConfig, reducers)

@@ -6,13 +6,13 @@ import { useSelector } from "react-redux"
 
 const Login = () => {
     const router = useRouter()
-    const isLoggedin = useSelector((state: RootState) => state.auth.isLoggedIn)
+    const username = useSelector((state: RootState) => state.auth.username)
 
     useEffect(() => {
-        if (isLoggedin) router.push("/")
-    }, [isLoggedin])
+        if (username) router.push("/")
+    }, [username])
 
-    return isLoggedin ? <p>Redirecting</p> : <LoginForm />
+    return username ? <p>Redirecting</p> : <LoginForm />
 }
 
 export default Login

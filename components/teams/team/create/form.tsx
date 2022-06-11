@@ -6,6 +6,7 @@ import PlayerSelect from "./PlayerSelect"
 
 import * as Yup from "yup"
 import { useEffect, useState } from "react"
+import { addTeam } from "ducks/modules/Teams"
 
 const TeamForm = () => {
     const dispatch = useDispatch()
@@ -21,24 +22,24 @@ const TeamForm = () => {
     const LoginSchema = Yup.object().shape({
         name: Yup.string()
             .matches(
-                /^[a-zA-Z0-9]+$/,
+                /^[a-zA-Z0-9z\s]+$/,
                 "Username must not contain whitespace or special characters"
             )
             .required("Required")
             .matches(
-                /^[a-zA-Z0-9]+$/,
+                /^[a-zA-Z0-9\s]+$/,
                 "Username must not contain whitespace or special characters"
             ),
         region: Yup.string()
             .required("Required")
             .matches(
-                /^[a-zA-Z0-9]+$/,
+                /^[a-zA-Z0-9\s]+$/,
                 "Username must not contain whitespace or special characters"
             ),
         country: Yup.string()
             .required("Required")
             .matches(
-                /^[a-zA-Z0-9()]+$/,
+                /^[a-zA-Z0-9()\s]+$/,
                 "Username must not contain whitespace or special characters"
             ),
         players: Yup.array()
@@ -65,9 +66,8 @@ const TeamForm = () => {
                         players: [],
                     }}
                     onSubmit={(values, { setSubmitting }) => {
-                        alert("Successfully logged in")
-                        console.log(values)
-                        // dispatch(login(values.name, true))
+                        dispatch(addTeam(values))
+                        alert("Team created successfully")
                         setSubmitting(false)
                     }}
                     validationSchema={LoginSchema}

@@ -7,13 +7,13 @@ import { useEffect } from "react"
 import { useSelector } from "react-redux"
 const Home: NextPage = () => {
     const router = useRouter()
-    const isLoggedin = useSelector((state: RootState) => state.auth.isLoggedIn)
+    const username = useSelector((state: RootState) => state.auth.username)
 
     useEffect(() => {
-        if (!isLoggedin) router.push("/login")
-    }, [isLoggedin])
+        if (!username) router.push("/login")
+    }, [username])
 
-    return !isLoggedin ? (
+    return !username ? (
         <p>Redirecting...</p>
     ) : (
         <>

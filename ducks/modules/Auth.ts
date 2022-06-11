@@ -3,7 +3,6 @@ import { AnyAction, Dispatch } from "redux"
 interface State {}
 
 const initialState = {
-    isLoggedIn: false,
     username: null,
 }
 
@@ -29,11 +28,6 @@ const AuthenticationReducer = (state = initialState, action: AnyAction) => {
 export const login = (username: string, status: boolean) => {
     return async (dispatch: Dispatch) => {
         dispatch({
-            type: "UPDATE_LOGIN_STATUS",
-            payload: status,
-        })
-
-        dispatch({
             type: "UPDATE_USERNAME_STATUS",
             payload: username,
         })
@@ -42,11 +36,6 @@ export const login = (username: string, status: boolean) => {
 
 export const logout = () => {
     return async (dispatch: Dispatch) => {
-        dispatch({
-            type: "UPDATE_LOGIN_STATUS",
-            payload: false,
-        })
-
         dispatch({
             type: "UPDATE_USERNAME_STATUS",
             payload: null,
