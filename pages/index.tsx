@@ -1,4 +1,5 @@
 import Navbar from "components/nav"
+import Teams from "components/teams"
 import { RootState } from "ducks/Store"
 import type { NextPage } from "next"
 import { useRouter } from "next/router"
@@ -12,7 +13,13 @@ const Home: NextPage = () => {
         if (!isLoggedin) router.push("/login")
     }, [isLoggedin])
 
-    return !isLoggedin ? <p>Redirecting...</p> : <>asdf</>
+    return !isLoggedin ? (
+        <p>Redirecting...</p>
+    ) : (
+        <>
+            <Teams />
+        </>
+    )
 }
 
 export default Home
