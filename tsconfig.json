@@ -33,7 +33,7 @@
         "components/teams/team/create/form.js",
         "components/teams/team/create/MenuList.js",
         "components/teams/team/create/VirtualizedList.js",
-        "components/teams/team/create/form.jsx"
+        "components/teams/team/form.jsx"
     ],
     "exclude": ["node_modules"]
 }

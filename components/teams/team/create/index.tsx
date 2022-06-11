@@ -3,7 +3,7 @@ import fetcher from "fetcher"
 import { useEffect, useState } from "react"
 import { Button, Modal } from "react-bootstrap"
 import useSWR from "swr"
-import TeamForm from "./form"
+import TeamForm from "../form/form"
 const TeamCreate = () => {
     const [modalShow, setModalShow] = useState(false)
 

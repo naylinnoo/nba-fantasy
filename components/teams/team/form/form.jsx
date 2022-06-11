@@ -1,24 +1,13 @@
-import { login } from "ducks/modules/Auth"
 import { ErrorMessage, Formik, FormikErrors } from "formik"
 import { Button, Container, Form } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import PlayerSelect from "./PlayerSelect"
 
 import * as Yup from "yup"
-import { useEffect, useState } from "react"
-import { addTeam, updatePlayerInTeams } from "ducks/modules/Teams"
-import { RootState } from "ducks/Store"
+import { addTeam, updateTeam } from "ducks/modules/Teams"
 
-const TeamForm = ({ setModalShow }) => {
+const TeamForm = ({ setModalShow, edit = false, data = [] }) => {
     const dispatch = useDispatch()
-
-    const addPlayerToTeams = (players) => {
-        var playersIds = []
-        players.map((value) => {
-            playersIds.push(value.value)
-        })
-        dispatch(updatePlayerInTeams(playersIds))
-    }
 
     const teams = useSelector((state) => state.teams.teams)
 
@@ -26,10 +15,10 @@ const TeamForm = ({ setModalShow }) => {
         return this.test(`test-name-unique`, errorMessage, function (value) {
             const { path, createError } = this
 
-            return (
-                !teams.find((data) => data.name === value) ||
-                createError({ path, message: errorMessage })
-            )
+            return !edit
+                ? !teams.find((data) => data.name === value)
+                : teams.find((data) => data.name === value) ||
+                      createError({ path, message: errorMessage })
         })
     })
 
@@ -66,20 +55,25 @@ const TeamForm = ({ setModalShow }) => {
 
     return (
         <Container fluid className=" mb-5">
-            <h3 className="text-center">Create Team</h3>
+            <h3 className="text-center">{edit ? "Edit" : "Create"} Team</h3>
             <br />
             <Container className="d-flex justify-content-center">
                 <Formik
                     initialValues={{
-                        name: "",
-                        region: "",
-                        country: "",
-                        players: [],
+                        name: edit ? data.name : "",
+                        region: edit ? data.region : "",
+                        country: edit ? data.country : "",
+                        players: edit ? data.players : [],
                     }}
                     onSubmit={(values, { setSubmitting }) => {
-                        dispatch(addTeam(values))
-                        addPlayerToTeams(values.players)
-                        alert("Team created successfully")
+                        if (edit) {
+                            dispatch(updateTeam(values))
+                        } else {
+                            dispatch(addTeam(values))
+                        }
+                        alert(
+                            `Team ${edit ? `edited` : `created`} successfully`
+                        )
                         setSubmitting(false)
                         setModalShow(false)
                     }}
@@ -104,6 +98,7 @@ const TeamForm = ({ setModalShow }) => {
                                     value={values.name}
                                     name="name"
                                     onChange={handleChange}
+                                    disabled={edit}
                                 />
                                 <ErrorMessage
                                     name="name"
@@ -172,7 +167,7 @@ const TeamForm = ({ setModalShow }) => {
                                 type="submit"
                                 disabled={isSubmitting}
                             >
-                                Create Team
+                                {`${edit ? `Edit` : `Create`} Team`}
                             </Button>
                         </Form>
                     )}

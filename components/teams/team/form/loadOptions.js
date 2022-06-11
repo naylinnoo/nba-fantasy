@@ -8,7 +8,14 @@ const loadOptions = async (search, page) => {
         { params: { page: page, per_page: 10, search: search } }
     )
     const options = []
-    const { playersInTeams } = store.getState().teams
+    const { teams } = store.getState().teams
+
+    const playersInTeams = []
+    teams.map((team) => {
+        team.players.map((player) => {
+            playersInTeams.push(player.value)
+        })
+    })
 
     data?.data.map((value) => {
         if (!playersInTeams.includes(value.id)) {
